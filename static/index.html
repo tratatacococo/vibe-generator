@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вайб-генератор</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: radial-gradient(circle at top, #222 0%, #000 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #fff;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 50px 60px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            max-width: 520px;
+            width: 90%;
+        }
+
+        h1 {
+            margin: 0 0 30px;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+         }
+
+        button {
+            background: linear-gradient(135deg, #7f5cff, #4cc3ff);
+            border: none;
+            border-radius: 14px;
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 10px 30px rgba(127, 92, 255, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(127, 92, 255, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 20px rgba(127, 92, 255, 0.3);
+        }
+
+        #idea {
+            margin-top: 35px;
+            font-size: 22px;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #idea.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+@media (max-width: 600px) {
+    .card {
+        padding: 30px 20px;
+        border-radius: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    #idea {
+        font-size: 18px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🎲 Вайб-генератор идей</h1>
+
+    <div class="buttons">
+        <button onclick="getIdea('normal')">🎲 Вайб</button>
+        <button onclick="getIdea('weird')">🔥 Странно</button>
+        <button onclick="getIdea('serious')">🧠 Серьёзно</button>
+    </div>
+
+    <div id="idea"></div>
+</div>
+
+<script>
+    async function getIdea(vibe) {
+        const ideaEl = document.getElementById("idea");
+        ideaEl.classList.remove("show");
+        ideaEl.textContent = "Генерируем… ✨";
+
+        try {
+            const response = await fetch(`/idea?vibe=${vibe}`);
+            const data = await response.json();
+            ideaEl.textContent = data.idea;
+            ideaEl.classList.add("show");
+        } catch (error) {
+            ideaEl.textContent = "Ошибка 😢 Проверь сервер";
+            console.error(error);
+        }
+    }
+</script>
+
+
+</body>
+</html>
