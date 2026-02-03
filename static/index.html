@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibe Generator</title>
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="/public/manifest.json">
 <meta name="theme-color" content="#0f172a">
     <style>
         * {
@@ -141,7 +141,7 @@ async function getIdea(vibe) {
 
 // ✅ PWA
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js");
+    navigator.serviceWorker.register("/public/service-worker.js");
 }
 </script>
 

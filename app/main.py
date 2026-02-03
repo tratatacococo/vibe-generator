@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+app.mount("/public", StaticFiles(directory="public"), name="public")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 from app.ideas import generate_ai_idea
 
