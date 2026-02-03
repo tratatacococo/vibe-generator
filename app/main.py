@@ -1,8 +1,13 @@
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
-app.mount("/public", StaticFiles(directory="public"), name="public")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+app.mount("/public", StaticFiles(directory=BASE_DIR / "public"), name="public")
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 from app.ideas import generate_ai_idea
