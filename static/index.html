@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вайб-генератор</title>
+    <title>Vibe Generator</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0f172a">
     <style>
         * {
             box-sizing: border-box;
@@ -103,6 +105,7 @@
     }
 }
 
+
     </style>
 </head>
 <body>
@@ -120,23 +123,27 @@
 </div>
 
 <script>
-    async function getIdea(vibe) {
-        const ideaEl = document.getElementById("idea");
-        ideaEl.classList.remove("show");
-        ideaEl.textContent = "Генерируем… ✨";
+async function getIdea(vibe) {
+    const ideaEl = document.getElementById("idea");
+    ideaEl.classList.remove("show");
+    ideaEl.textContent = "Генерируем… ✨";
 
-        try {
-            const response = await fetch(`/idea?vibe=${vibe}`);
-            const data = await response.json();
-            ideaEl.textContent = data.idea;
-            ideaEl.classList.add("show");
-        } catch (error) {
-            ideaEl.textContent = "Ошибка 😢 Проверь сервер";
-            console.error(error);
-        }
+    try {
+        const response = await fetch(`/idea?vibe=${vibe}`);
+        const data = await response.json();
+        ideaEl.textContent = data.idea;
+        ideaEl.classList.add("show");
+    } catch (error) {
+        ideaEl.textContent = "Ошибка 😢 Проверь сервер";
+        console.error(error);
     }
-</script>
+}
 
+// ✅ PWA
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js");
+}
+</script>
 
 </body>
 </html>
